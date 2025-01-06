@@ -3,15 +3,16 @@ const cds = require('@sap/cds');
 module.exports = cds.service.impl(async function () {
   const { Bins, BinStock, Products, StockTransfers } = this.entities;
 
-  /**
-   * Handles the transferStock action.
-   */
   this.on('transferStock', async (req) => {
     const { productID, sourceBinID, destinationBinID, quantity, comment } = req.data;
 
     // Validate input parameters
     if (!productID || !sourceBinID || !destinationBinID || !quantity || quantity <= 0) {
       return req.error(400, 'Invalid input parameters. Please check your request.');
+    }
+
+    if (sourceBinID === destinationBinID) {
+      return req.error(400, 'Source bin and destination bin cannot be the same.');
     }
 
     // Validate source bin stock
@@ -50,7 +51,7 @@ module.exports = cds.service.impl(async function () {
       quantity: quantity,
       transferDate: new Date().toISOString(),
       status: 'Pending',
-      comment: comment || '', // Optional comment
+      comment: comment || '',
     });
 
     try {

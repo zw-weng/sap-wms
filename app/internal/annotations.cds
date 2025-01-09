@@ -1,26 +1,47 @@
 using StockService as service from '../../srv/stock-srv';
+
 annotate service.StockTransfers with @(
     UI.FieldGroup #GeneratedGroup : {
         $Type : 'UI.FieldGroupType',
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'quantity',
+                Label : 'Transfer ID',
+                Value : ID,
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : 'Product ID',
+                Value : product_ID,
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : 'Source Bin ID',
+                Value : sourceBinStock.bin_ID,
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : 'Destination Bin ID',
+                Value : destinationBinStock_bin_ID,
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : 'Quantity',
                 Value : quantity,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'transferDate',
+                Label : 'Transfer Date',
                 Value : transferDate,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'status',
+                Label : 'Status',
                 Value : status,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'comment',
+                Label : 'Comment',
                 Value : comment,
             },
         ],
@@ -28,7 +49,7 @@ annotate service.StockTransfers with @(
     UI.Facets : [
         {
             $Type : 'UI.ReferenceFacet',
-            ID : 'GeneratedFacet1',
+            ID : 'GeneralInfo',
             Label : 'General Information',
             Target : '@UI.FieldGroup#GeneratedGroup',
         },
@@ -36,54 +57,57 @@ annotate service.StockTransfers with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'quantity',
+            Label : 'Transfer ID',
+            Value : ID,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Product ID',
+            Value : product_ID,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Source Bin ID',
+            Value : sourceBinStock.bin_ID,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Destination Bin ID',
+            Value : destinationBinStock_bin_ID,
+        },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Quantity',
             Value : quantity,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'transferDate',
+            Label : 'Transfer Date',
             Value : transferDate,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'status',
+            Label : 'Status',
             Value : status,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'comment',
+            Label : 'Comment',
             Value : comment,
         },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Label : 'Create Stock Transfer',
+            Action : 'StockService.transferStock'
+        }
     ],
-);
-
-annotate service.StockTransfers with {
-    product @Common.ValueList : {
-        $Type : 'Common.ValueListType',
-        CollectionPath : 'Products',
-        Parameters : [
-            {
-                $Type : 'Common.ValueListParameterInOut',
-                LocalDataProperty : product_ID,
-                ValueListProperty : 'ID',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'name',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'description',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'productCategory',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'unitOfMeasure',
-            },
-        ],
+    UI.HeaderInfo : {
+        TypeName : 'Stock Transfer',
+        TypeNamePlural : 'Stock Transfers',
+        Title : {
+            $Type : 'UI.DataField',
+            Value : ID, // Header Title will use Transfer ID
+        }
     }
-};
+);
 

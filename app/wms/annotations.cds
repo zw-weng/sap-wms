@@ -1,1 +1,0 @@
-using StockService as service from '../../srv/stock-srv';

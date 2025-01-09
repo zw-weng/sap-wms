@@ -1,2 +1,2 @@
 
-using from './internal/annotations';
+using from './wms/annotations';

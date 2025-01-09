@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-internal": "cds watch --open internal/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-wms": "cds watch --open wms/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "requires": {
@@ -30,6 +30,6 @@
     }
   },
   "sapux": [
-    "app/internal"
+    "app/wms"
   ]
 }

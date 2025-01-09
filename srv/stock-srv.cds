@@ -1,17 +1,41 @@
-using my.wms as wms from '../db/schema';
+using app.stocktransfer from '../db/stocktransfer';
 using {sap} from '@sap/cds-common-content';
 
 service StockService {
-    entity Bins           as projection on wms.Bins;
-    entity Products       as projection on wms.Products;
-    entity BinStock       as projection on wms.BinStock;
-    entity StockTransfers as projection on wms.StockTransfers;
 
-    action transferStock(
-        productID: UUID,           // Product being transferred
-        sourceBinID: UUID,         // Source bin ID
-        destinationBinID: UUID,    // Destination bin ID
-        quantity: Integer,         // Quantity to transfer
-        comment: String            // Optional comment for the transfer
+    // Enabling draft for managing stock transfers (Optional if you need draft support)
+    @odata.draft.enabled: true
+    entity StockTransfers as projection on stocktransfer.StockTransfers;
+
+    // Exposing Bins entity for bin management
+    entity Bins as projection on stocktransfer.Bins;
+
+    // Exposing Products entity for product management
+    entity Products as projection on stocktransfer.Products;
+
+    // Optional: Languages for value help or localization
+    @readonly
+    entity Languages as projection on sap.common.Languages;
+
+    // Optional: Expose BinStock if you decide to use it for stock levels
+    entity BinStock as projection on stocktransfer.BinStock;
+
+    // Actions for managing stock transfers
+    action addStockTransfer(
+        productID: String(5),
+        sourceBinID: String(5),
+        destinationBinID: String(5),
+        quantity: Integer,
+        comment: String(500)
+    ) returns String;
+
+    action deleteStockTransfer(
+        transferID: String(5)
+    ) returns String;
+
+    action modifyStockTransfer(
+        transferID: String(5),
+        quantity: Integer,
+        comment: String(500)
     ) returns String;
 }

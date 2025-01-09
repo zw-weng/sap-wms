@@ -1,50 +1,78 @@
 const cds = require('@sap/cds');
 
 module.exports = cds.service.impl(async function () {
-  const { StockTransfers, BinStock } = this.entities;
+    const { StockTransfers, BinStock } = this.entities;
 
-  this.on('transferStock', async (req) => {
-    const { productID, sourceBinID, destinationBinID, quantity, comment } = req.data;
+    // Add Stock Transfer Action
+    this.on('addStockTransfer', async (req) => {
+        const { productID, sourceBinID, destinationBinID, quantity, comment } = req.data;
 
-    if (!productID || !sourceBinID || !destinationBinID || !quantity || quantity <= 0) {
-      return req.error(400, 'Invalid input parameters.');
-    }
+        // Validate input
+        if (!productID || !sourceBinID || !destinationBinID || quantity <= 0) {
+            return req.error(400, 'Invalid input parameters.');
+        }
 
-    if (sourceBinID === destinationBinID) {
-      return req.error(400, 'Source and destination bins cannot be the same.');
-    }
+        // Check if sufficient stock is available in the source bin
+        const sourceBinStock = await SELECT.one.from(BinStock)
+            .where({ bin_ID: sourceBinID, product_ID: productID });
 
-    const sourceStock = await SELECT.one.from(BinStock).where({ bin_ID: sourceBinID, product_ID: productID });
-    if (!sourceStock || sourceStock.quantity < quantity) {
-      return req.error(400, 'Insufficient stock in source bin.');
-    }
+        if (!sourceBinStock || sourceBinStock.quantity < quantity) {
+            return req.error(400, 'Insufficient stock in the source bin.');
+        }
 
-    const destinationStock = await SELECT.one.from(BinStock).where({ bin_ID: destinationBinID, product_ID: productID });
-    const newDestinationQuantity = destinationStock ? destinationStock.quantity + quantity : quantity;
+        // Generate a unique ID for the stock transfer
+        const transferID = `TRANS${Date.now()}`;
+        const transferDate = new Date().toISOString();
 
-    await UPDATE(BinStock).set({ quantity: { '-=': quantity } }).where({ bin_ID: sourceBinID, product_ID: productID });
-    if (destinationStock) {
-      await UPDATE(BinStock).set({ quantity: { '+=': quantity } }).where({ bin_ID: destinationBinID, product_ID: productID });
-    } else {
-      await INSERT.into(BinStock).entries({
-        bin_ID: destinationBinID,
-        product_ID: productID,
-        quantity: newDestinationQuantity
-      });
-    }
+        // Update stock in the source bin
+        await UPDATE(BinStock)
+            .set({ quantity: sourceBinStock.quantity - quantity })
+            .where({ bin_ID: sourceBinID, product_ID: productID });
 
-    const transferID = cds.utils.uuid();
-    await INSERT.into(StockTransfers).entries({
-      ID: transferID,
-      product_ID: productID,
-      sourceBinStock_ID: sourceBinID,
-      destinationBinStock_ID: destinationBinID,
-      quantity,
-      transferDate: new Date().toISOString(),
-      status: 'Completed',
-      comment
+        // Update or create stock in the destination bin
+        const destinationBinStock = await SELECT.one.from(BinStock)
+            .where({ bin_ID: destinationBinID, product_ID: productID });
+
+        if (destinationBinStock) {
+            await UPDATE(BinStock)
+                .set({ quantity: destinationBinStock.quantity + quantity })
+                .where({ bin_ID: destinationBinID, product_ID: productID });
+        } else {
+            await INSERT.into(BinStock).entries({
+                bin_ID: destinationBinID,
+                product_ID: productID,
+                quantity,
+            });
+        }
+
+        // Insert a new stock transfer record
+        await INSERT.into(StockTransfers).entries({
+            ID: transferID,
+            product_ID: productID,
+            sourceBinStock_bin_ID: sourceBinID,
+            destinationBinStock_bin_ID: destinationBinID,
+            quantity,
+            transferDate,
+            status: 'Pending',
+            comment,
+        });
+
+        return `Stock transfer added successfully with ID: ${transferID}`;
     });
 
-    return `Stock transfer completed successfully. Transfer ID: ${transferID}`;
-  });
+    // Delete Stock Transfer Action
+    this.on('deleteStockTransfer', async (req) => {
+        const { ID } = req.data;
+        await DELETE.from(StockTransfers).where({ ID });
+        return `Stock transfer with ID ${ID} deleted successfully.`;
+    });
+
+    // Modify Stock Transfer Action
+    this.on('modifyStockTransfer', async (req) => {
+        const { transferID, quantity, comment } = req.data;
+        await UPDATE(StockTransfers)
+            .set({ quantity, comment })
+            .where({ ID: transferID });
+        return `Stock transfer with ID ${transferID} updated successfully.`;
+    });
 });

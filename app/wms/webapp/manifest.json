@@ -1,7 +1,7 @@
 {
   "_version": "1.65.0",
   "sap.app": {
-    "id": "internal",
+    "id": "wms",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:worklist",
       "version": "1.16.1",
-      "toolsId": "4d8b58f2-d529-4af7-a86a-0afae0e6ffb9"
+      "toolsId": "6057c451-ae83-4391-a8c4-02dc559141bd"
     },
     "dataSources": {
       "mainService": {
@@ -60,7 +60,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "internal.i18n.i18n"
+          "bundleName": "wms.i18n.i18n"
         }
       },
       "": {

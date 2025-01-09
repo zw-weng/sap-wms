@@ -1,15 +1,15 @@
 sap.ui.require(
     [
         'sap/fe/test/JourneyRunner',
-        'internal/test/integration/FirstJourney',
-		'internal/test/integration/pages/StockTransfersList',
-		'internal/test/integration/pages/StockTransfersObjectPage'
+        'wms/test/integration/FirstJourney',
+		'wms/test/integration/pages/StockTransfersList',
+		'wms/test/integration/pages/StockTransfersObjectPage'
     ],
     function(JourneyRunner, opaJourney, StockTransfersList, StockTransfersObjectPage) {
         'use strict';
         var JourneyRunner = new JourneyRunner({
             // start index.html in web folder
-            launchUrl: sap.ui.require.toUrl('internal') + '/index.html'
+            launchUrl: sap.ui.require.toUrl('wms') + '/index.html'
         });
 
        

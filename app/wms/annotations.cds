@@ -1,47 +1,41 @@
 using StockService as service from '../../srv/stock-srv';
-
 annotate service.StockTransfers with @(
     UI.FieldGroup #GeneratedGroup : {
         $Type : 'UI.FieldGroupType',
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'Transfer ID',
+                Label : 'transferID',
                 Value : transferID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Product ID',
-                Value : product_ID,
+                Label : 'product_productID',
+                Value : product_productID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Source Bin ID',
-                Value : sourceBin_ID,
+                Label : 'sourceBin_binID',
+                Value : sourceBin_binID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Destination Bin ID',
-                Value : destinationBin_ID,
+                Label : 'destinationBin_binID',
+                Value : destinationBin_binID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Quantity',
+                Label : 'quantity',
                 Value : quantity,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Transfer Date',
+                Label : 'transferDate',
                 Value : transferDate,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Status',
-                Value : status,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'Comment',
+                Label : 'comment',
                 Value : comment,
             },
         ],
@@ -57,43 +51,28 @@ annotate service.StockTransfers with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'Transfer ID',
+            Label : 'transferID',
             Value : transferID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'Product ID',
-            Value : product_ID,
+            Label : 'product_productID',
+            Value : product_productID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'Source Bin ID',
-            Value : sourceBin_ID,
+            Label : 'sourceBin_binID',
+            Value : sourceBin_binID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'Destination Bin ID',
-            Value : destinationBin_ID,
+            Label : 'destinationBin_binID',
+            Value : destinationBin_binID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'Quantity',
+            Label : 'quantity',
             Value : quantity,
-        },
-        {
-            $Type : 'UI.DataField',
-            Label : 'Transfer Date',
-            Value : transferDate,
-        },
-        {
-            $Type : 'UI.DataField',
-            Label : 'Status',
-            Value : status,
-        },
-        {
-            $Type : 'UI.DataField',
-            Label : 'Comment',
-            Value : comment,
         },
     ],
 );
@@ -105,11 +84,7 @@ annotate service.StockTransfers with {
         Parameters : [
             {
                 $Type : 'Common.ValueListParameterInOut',
-                LocalDataProperty : product_ID,
-                ValueListProperty : 'ID',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
+                LocalDataProperty : product_productID,
                 ValueListProperty : 'productID',
             },
             {
@@ -124,6 +99,10 @@ annotate service.StockTransfers with {
                 $Type : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty : 'category',
             },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'unitOfMeasure',
+            },
         ],
     }
 };
@@ -135,11 +114,7 @@ annotate service.StockTransfers with {
         Parameters : [
             {
                 $Type : 'Common.ValueListParameterInOut',
-                LocalDataProperty : sourceBin_ID,
-                ValueListProperty : 'ID',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
+                LocalDataProperty : sourceBin_binID,
                 ValueListProperty : 'binID',
             },
             {
@@ -165,11 +140,7 @@ annotate service.StockTransfers with {
         Parameters : [
             {
                 $Type : 'Common.ValueListParameterInOut',
-                LocalDataProperty : destinationBin_ID,
-                ValueListProperty : 'ID',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
+                LocalDataProperty : destinationBin_binID,
                 ValueListProperty : 'binID',
             },
             {
@@ -187,3 +158,4 @@ annotate service.StockTransfers with {
         ],
     }
 };
+

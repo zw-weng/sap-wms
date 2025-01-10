@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:worklist",
       "version": "1.16.1",
-      "toolsId": "6057c451-ae83-4391-a8c4-02dc559141bd"
+      "toolsId": "bb983f56-13bf-40b4-89f6-67faaeb47cba"
     },
     "dataSources": {
       "mainService": {

@@ -4,10 +4,16 @@ namespace app.stocktransfer;
 type BinID          : String(5);      // Format: B000X
 type ProductID      : String(5);      // Format: P000X
 type TransferID     : String(5);      // Format: T000X
+type StatusID       : String(10);     // Primary Key for Status Entity
 type Quantity       : Integer;
-type Status         : String(10);     // Status options: Pending, Completed, Failed
 type Comment        : String(500);
 type TDate          : DateTime;       // Timestamp for transferDate
+
+// Entity: Status
+entity Status {
+    key statusID   : StatusID;        // Primary Key, e.g., Pending, Completed
+    description    : String(50);      // Description for display purposes
+}
 
 // Entity: Bins
 entity Bins {
@@ -56,23 +62,18 @@ entity BinStock {
 entity StockTransfers {
     key transferID   : TransferID;    // Primary Key
 
-    product      : Association to Products;
-    sourceBin    : Association to Bins;
-    destinationBin: Association to Bins;
+    product          : Association to Products;
+    sourceBin        : Association to Bins;
+    destinationBin   : Association to Bins;
 
     @UI.LineItem: [{ position: 20 }]
-    quantity     : Quantity;
+    quantity         : Quantity;
 
     @UI.LineItem: [{ position: 30 }]
-    transferDate : TDate @UI.DataPoint: { type: #DateTime };
+    transferDate     : TDate @UI.DataPoint: { type: #DateTime };
 
-    @UI.LineItem: [{ position: 40 }]
-    status       : Status enum {
-        Pending;
-        Completed;
-        Failed;
-    };
+    status           : Association to Status; // Association to Status entity
 
     @UI.LineItem: [{ position: 50 }]
-    comment      : Comment;
+    comment          : Comment;
 }

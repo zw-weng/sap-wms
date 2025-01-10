@@ -35,6 +35,11 @@ annotate service.StockTransfers with @(
             },
             {
                 $Type : 'UI.DataField',
+                Label : 'status_statusID',
+                Value : status_statusID,
+            },
+            {
+                $Type : 'UI.DataField',
                 Label : 'comment',
                 Value : comment,
             },
@@ -154,6 +159,24 @@ annotate service.StockTransfers with {
             {
                 $Type : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty : 'binType',
+            },
+        ],
+    }
+};
+
+annotate service.StockTransfers with {
+    status @Common.ValueList : {
+        $Type : 'Common.ValueListType',
+        CollectionPath : 'Status',
+        Parameters : [
+            {
+                $Type : 'Common.ValueListParameterInOut',
+                LocalDataProperty : status_statusID,
+                ValueListProperty : 'statusID',
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'description',
             },
         ],
     }

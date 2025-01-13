@@ -5,42 +5,42 @@ annotate service.StockTransfers with @(
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'transferID',
+                Label : 'Transfer ID',
                 Value : transferID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'product_productID',
+                Label : 'Product ID',
                 Value : product_productID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'sourceBin_binID',
+                Label : 'Source Bin ID',
                 Value : sourceBin_binID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'destinationBin_binID',
+                Label : 'Destination Bin ID',
                 Value : destinationBin_binID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'quantity',
+                Label : 'Quantity',
                 Value : quantity,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'transferDate',
+                Label : 'Transfer Date',
                 Value : transferDate,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'status_statusID',
+                Label : 'Transfer Status',
                 Value : status_statusID,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'comment',
+                Label : 'Remark',
                 Value : comment,
             },
         ],
@@ -49,34 +49,34 @@ annotate service.StockTransfers with @(
         {
             $Type : 'UI.ReferenceFacet',
             ID : 'GeneratedFacet1',
-            Label : 'General Information',
+            Label : 'Stock Transfer Information',
             Target : '@UI.FieldGroup#GeneratedGroup',
         },
     ],
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'transferID',
+            Label : 'Transfer ID',
             Value : transferID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'product_productID',
+            Label : 'Product ID',
             Value : product_productID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'sourceBin_binID',
+            Label : 'Source Bin ID',
             Value : sourceBin_binID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'destinationBin_binID',
+            Label : 'Destination Bin ID',
             Value : destinationBin_binID,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'quantity',
+            Label : 'Quantity',
             Value : quantity,
         },
     ],
@@ -181,4 +181,3 @@ annotate service.StockTransfers with {
         ],
     }
 };
-

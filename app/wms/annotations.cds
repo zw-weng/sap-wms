@@ -79,6 +79,11 @@ annotate service.StockTransfers with @(
             Label : 'Quantity',
             Value : quantity,
         },
+        {
+            $Type : 'UI.DataField',
+            Label : 'Status',
+            Value : status_statusID,
+        },
     ],
 );
 
